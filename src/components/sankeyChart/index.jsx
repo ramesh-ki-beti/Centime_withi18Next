@@ -1,21 +1,9 @@
 import Chart from "react-google-charts";
 import React from "react";
+import { colors } from '../../app/constants';
+
 function SankeyChart(props) {
-  const {sankeyData, customClass} = props;
-  let options = {
-    sankey: {
-      node: {
-        label: {
-          fontName: "sans-serif",
-          fontSize: 8,
-          color: "#000",
-          bold: true,
-          italic: false
-        },
-        interactivity: false // Allows you to select nodes.
-      }
-    }
-  };
+  const {sankeyData, customClass, options} = props;
   return (
     <div className={customClass} data-testid='SankeyChart-div-container'>
       <Chart

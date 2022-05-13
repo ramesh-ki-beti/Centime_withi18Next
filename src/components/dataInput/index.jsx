@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import Input from "@material-ui/core/Input";
 import { withStyles } from "@material-ui/core/styles";
 import { billTypeText } from "../../app/constants";
+import { getTotalBill } from "../../app/utils";
 import styles from "./styles";
 function DataInput({
   classes,
@@ -16,6 +17,7 @@ function DataInput({
   /**state initialization */
   const [incomeValue, updateIncomeValue] = React.useState(income);
   const [billsValue, updateBillsValue] = React.useState(bills);
+  const [error, updateErrorValue] = React.useState("");
 
   //** handle effects */
   useEffect(() => {
@@ -25,13 +27,33 @@ function DataInput({
     updateBillsValue(bills);
   }, [bills]);
   //**Ui update methods. */
+
   const updateIncome = ({ target: { value = "" } = {} }) => {
+    let error = "";
+    const totalBill = getTotalBill(billsValue);
     const parseValue = Number(value);
-    updateIncomeInStore(parseValue);
+    updateIncomeValue(parseValue);
+    if (value >= totalBill) {
+      updateIncomeInStore(parseValue);
+    } else {
+      error = "Income cannot be less than expenses.";
+    }
+    updateErrorValue(error);
   };
   const updateBills = ({ target: { value = "", id = "" } = {} }) => {
     const parseValue = Number(value);
-    updateBillsInStore({ key: id, value: parseValue });
+    let error = "";
+    let billValue ={...billsValue};
+    billValue[id] = parseValue;
+
+    const totalBill = getTotalBill(billValue);
+    updateBillsValue(billValue);
+    if (income >= totalBill) {
+      updateBillsInStore({ key: id, value: parseValue });
+    } else {
+      error = "Your expenses cannot be greater than your income";
+    }
+    updateErrorValue(error);
   };
   //**Render */
   const renderBills = data => (
@@ -45,6 +67,7 @@ function DataInput({
         value={billsValue[data]}
         onChange={updateBills}
         data-testid="DataInput_input_bills"
+        autoComplete="off"
       />
       <button
         onClick={() => deleteExpenseInStore(data)}
@@ -71,9 +94,11 @@ function DataInput({
           value={incomeValue}
           onChange={updateIncome}
           data-testid="DataInput-input-incomeValue"
+          autoComplete="off"
         />
       </div>
       {billsArr.map(item => item)}
+      <div className={classes.errorStyle}>{error}</div>
     </div>
   );
 }

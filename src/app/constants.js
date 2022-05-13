@@ -23,4 +23,25 @@ export const languages = [
       country_code: "in"
     }
   ];
+  export const colors = ['1F1FFF','#0080bf', '#00acdf', '#55d0ff', '#7ce8ff',
+  '#ccf9ff'];
+  export  let options = {
+    sankey: {
+      node: {
+        colors: colors,
+        label: {
+          fontName: "sans-serif",
+          fontSize: 10,
+          color: "#000",
+          bold: true,
+          italic: false
+        },
+        interactivity: false 
+      },
+      link: {
+        colorMode: 'gradient',
+        colors: colors
+      }
+    }
+  };
   export default ActionTypes;

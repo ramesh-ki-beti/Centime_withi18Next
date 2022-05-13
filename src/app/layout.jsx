@@ -1,11 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import {
-  InputLabel,
-  FormControl,
-  Select,
-  MenuItem
-} from "@material-ui/core";
+import { InputLabel, FormControl, Select, MenuItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import i18Next from "i18next";
 import DataInput from "../components/dataInput";
@@ -13,13 +8,14 @@ import SankeyChart from "../components/sankeyChart";
 import styles from "./styles";
 import { getSankeyData } from "./utils";
 import { imageSource, languages } from "./constants";
+import { options } from "./constants";
 
 function App({
   classes,
   income,
   bills = {},
   updateIncomeInStore,
-  budget={},
+  budget = {},
   updateBillsInStore,
   deleteExpenseInStore,
   code
@@ -59,7 +55,13 @@ function App({
                 data-testid="AppLayout-Select-LanguageSelect"
               >
                 {languages.map(({ code, name, country_code }) => (
-                  <MenuItem value={code} key={country_code} data-testid={`AppLayout-option-code`}>{name}</MenuItem>
+                  <MenuItem
+                    value={code}
+                    key={country_code}
+                    data-testid={`AppLayout-option-code`}
+                  >
+                    {name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -78,6 +80,7 @@ function App({
           <SankeyChart
             customClass={classes.sankeyGraphAlign}
             sankeyData={sankeyData}
+            options={options}
           />
         </div>
       </div>

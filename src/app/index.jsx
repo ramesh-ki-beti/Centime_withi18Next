@@ -25,7 +25,7 @@ const AppContainer = (props) => {
         mobileBill: 1000
       }
     });
-  }, []);
+  }, [loadInitialData]);
 return (<App {...props} />);
 };
 

@@ -20,7 +20,7 @@ jest.mock('react-i18next', () => ({
       };
     },
   }));
-  
+
 describe("DataInput", () => {
   afterEach(() => {
     cleanup;
@@ -43,6 +43,7 @@ describe("DataInput", () => {
     );
     fireEvent.change(input, { target: { value: "4000" } });
     expect(updateIncomeInStoreJest).toHaveBeenCalledWith(4000);
+    fireEvent.change(input, { target: { value: "400" } });
     const button = queryAllByTestId("DataInput_button_delete");
     fireEvent.click(button[0]);
     expect(deleteExpenseInStoreJest).toHaveBeenCalledWith("electricityBill");
@@ -55,5 +56,6 @@ describe("DataInput", () => {
       key: "electricityBill",
       value: 100
     });
+    fireEvent.change(billsInput, { target: { value: "10000" } });
   });
 });

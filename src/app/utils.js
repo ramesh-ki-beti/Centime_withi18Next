@@ -5,10 +5,7 @@ export const getSankeyData = (data, t) => {
   const { income, bills } = data;
   resuLTArray.push([`${t("salary")}`, `${t("budget")}`, income]);
   if (bills) {
-    const billsValue = Object.values(bills);
-    const totalBill = billsValue.reduce((acc, val) => {
-      return acc + val;
-    }, 0);
+    const totalBill = getTotalBill(bills);
     resuLTArray.push([`${t("budget")}`, `${t("bills")}`, totalBill]);
     for (let item in bills) {
       resuLTArray.push([
@@ -21,3 +18,11 @@ export const getSankeyData = (data, t) => {
 
   return resuLTArray;
 };
+
+export const getTotalBill = (bills) => {
+  const billsArray = Object.values(bills);
+  const totalBill = billsArray.reduce((acc, val) => {
+    return acc + val;
+  }, 0);
+  return totalBill;
+}

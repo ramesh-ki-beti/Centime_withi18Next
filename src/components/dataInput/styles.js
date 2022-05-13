@@ -8,6 +8,9 @@ function styles() {
     inputSpanStyle:{
         display:'inline-block',
         width: '20%'
+    },
+    errorStyle:{
+        color:'#FF0000',
     }
   });
 }
