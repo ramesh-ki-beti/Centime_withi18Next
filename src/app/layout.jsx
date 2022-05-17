@@ -13,9 +13,9 @@ import { options } from "./constants";
 function App({
   classes,
   income,
-  bills = {},
+  bills,
   updateIncomeInStore,
-  budget = {},
+  budget,
   updateBillsInStore,
   deleteExpenseInStore,
   code

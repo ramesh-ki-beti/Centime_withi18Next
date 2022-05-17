@@ -27,7 +27,7 @@ describe("DataInput", () => {
     jest.clearAllMocks();
   });
   it("renders correctly and calls all actions", () => {
-    const { queryByTestId, debug, queryAllByTestId, queryByRole } = render(
+    const { queryByTestId, debug, queryAllByTestId, queryByRole, queryAllByRole } = render(
       <DataInput
         income={mockIncome}
         bills={mockBills}
@@ -57,5 +57,13 @@ describe("DataInput", () => {
       value: 100
     });
     fireEvent.change(billsInput, { target: { value: "10000" } });
+    expect(queryByTestId('DataInput-formControl-addExpense')).toBeInTheDocument();
+    fireEvent.mouseDown(queryByRole("button"));
+    expect(queryByTestId("DataInput-menuItem-options")).toBeInTheDocument();
+    act(() => {
+      const options = queryAllByRole("option");
+      fireEvent.mouseDown(options[1]);
+      options[1].click();
+    });
   });
 });

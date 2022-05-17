@@ -6,7 +6,10 @@ const  ActionTypes = {
 }
 export const billTypeText = {
     electricityBill: 'Electricity Bill',
-    mobileBill: 'Mobile Bill'
+    mobileBill: 'Mobile Bill',
+    educationBill: 'Education Bill',
+    groceryBill: 'Grocery Bill',
+    homeRentBill: 'Home Rent Bill'
 }
 export const imageSource =
   "https://assets.website-files.com/6231e693006d733616e2ace5/6231e693006d73d0fbe2ad23_logo2.svg";
@@ -44,4 +47,11 @@ export const languages = [
       }
     }
   };
+  // export const expenseList = {
+  //   electricityBill: 'Electricity Bill',
+  //   mobileBill: 'Mobile Bill',
+  //   educationBill: 'Education Bill',
+  //   groceryBill: 'Grocery Bill',
+  //   homeRentBill: 'Home Rent Bill'
+  // }
   export default ActionTypes;

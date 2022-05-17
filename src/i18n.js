@@ -2,10 +2,12 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import HttpApi from "i18next-http-backend";
+import backend from "i18next-xhr-backend";
 
 i18n
   // detect user language
   // learn more: https://github.com/i18next/i18next-browser-languageDetector
+  .use(backend)
   .use(LanguageDetector)
   // pass the i18n instance to react-i18next.
   .use(initReactI18next)
@@ -33,7 +35,6 @@ i18n
         "subdomain"
       ]
     },
-    react:{useSuspense: false}
   });
 
 export default i18n;

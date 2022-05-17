@@ -6,5 +6,9 @@
     "bills": "Bills",
     "weight": "Weight",
     "Electricity Bill": "Electricity Bill",
-    "Mobile Bill": "Mobile Bill"
+    "Mobile Bill": "Mobile Bill",
+    "Education Bill": "Education Bill",
+    "Grocery Bill": "Grocery Bill",
+    "Home Rent Bill": "Home Rent Bill",
+    "add_expense": "Add Expense"
 }

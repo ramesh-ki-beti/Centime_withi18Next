@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Input from "@material-ui/core/Input";
+import { InputLabel, FormControl, Select, MenuItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { billTypeText } from "../../app/constants";
 import { getTotalBill } from "../../app/utils";
 import styles from "./styles";
+
 function DataInput({
   classes,
   income,
@@ -18,6 +20,7 @@ function DataInput({
   const [incomeValue, updateIncomeValue] = React.useState(income);
   const [billsValue, updateBillsValue] = React.useState(bills);
   const [error, updateErrorValue] = React.useState("");
+  const [selectedBill, billSelection] = React.useState("");
 
   //** handle effects */
   useEffect(() => {
@@ -28,32 +31,48 @@ function DataInput({
   }, [bills]);
   //**Ui update methods. */
 
-  const updateIncome = ({ target: { value = "" } = {} }) => {
-    let error = "";
-    const totalBill = getTotalBill(billsValue);
-    const parseValue = Number(value);
-    updateIncomeValue(parseValue);
-    if (value >= totalBill) {
-      updateIncomeInStore(parseValue);
-    } else {
-      error = "Income cannot be less than expenses.";
+  const updateIncome = e => {
+    const { value } = e.target;
+    const parseValue = parseInt(value, 10);
+    if (!isNaN(parseValue)) {
+      let error = "";
+      const totalBill = getTotalBill(billsValue);
+      updateIncomeValue(parseValue);
+      if (value >= totalBill) {
+        updateIncomeInStore(parseValue);
+      } else {
+        error = "Income cannot be less than expenses.";
+      }
+      updateErrorValue(error);
     }
-    updateErrorValue(error);
   };
-  const updateBills = ({ target: { value = "", id = "" } = {} }) => {
-    const parseValue = Number(value);
-    let error = "";
-    let billValue ={...billsValue};
-    billValue[id] = parseValue;
 
-    const totalBill = getTotalBill(billValue);
-    updateBillsValue(billValue);
-    if (income >= totalBill) {
-      updateBillsInStore({ key: id, value: parseValue });
-    } else {
-      error = "Your expenses cannot be greater than your income";
+  const updateBills = e => {
+    const { value, id } = e.target;
+    const parseValue = parseInt(value, 10);
+    if (!isNaN(parseValue)) {
+      let error = "";
+      let billValue = { ...billsValue };
+      billValue[id] = parseValue;
+
+      const totalBill = getTotalBill(billValue);
+      updateBillsValue(billValue);
+      if (income >= totalBill) {
+        updateBillsInStore({ key: id, value: parseValue });
+      } else {
+        error = "Your expenses cannot be greater than your income";
+      }
+      updateErrorValue(error);
     }
-    updateErrorValue(error);
+  };
+  const handleExpenseAddition = e => {
+    const { value } = e.target;
+    billSelection(value);
+    updateBillsInStore({ key: value, value: 0 });
+  };
+  const deleteExpense = data => {
+    billSelection("");
+    deleteExpenseInStore(data);
   };
   //**Render */
   const renderBills = data => (
@@ -70,7 +89,7 @@ function DataInput({
         autoComplete="off"
       />
       <button
-        onClick={() => deleteExpenseInStore(data)}
+        onClick={() => deleteExpense(data)}
         data-testid="DataInput_button_delete"
       >
         {t("delete_button")}
@@ -78,8 +97,15 @@ function DataInput({
     </div>
   );
   let billsArr = [];
+  const expenseArr = [];
+
   for (let item in billsValue) {
     billsArr.push(renderBills(item));
+  }
+  for (let expense in billTypeText) {
+    if (!billsValue[expense]) {
+      expenseArr.push({ key: expense, value: billTypeText[expense] });
+    }
   }
 
   return (
@@ -99,6 +125,32 @@ function DataInput({
       </div>
       {billsArr.map(item => item)}
       <div className={classes.errorStyle}>{error}</div>
+      <FormControl
+        className={classes.formControl}
+        data-testid="DataInput-formControl-addExpense"
+      >
+        <InputLabel
+          htmlFor="age-native-helper"
+          data-testid="DataInput-formControl-addExpenseLabel"
+        >
+          {t("add_expense")}
+        </InputLabel>
+        <Select
+          value={selectedBill}
+          onChange={handleExpenseAddition}
+          key={"native_select"}
+        >
+          {expenseArr.map(({ key, value }) => (
+            <MenuItem
+              value={key}
+              key={`${value}_key`}
+              data-testid="DataInput-menuItem-options"
+            >
+              {value}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </div>
   );
 }

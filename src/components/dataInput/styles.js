@@ -11,6 +11,9 @@ function styles() {
     },
     errorStyle:{
         color:'#FF0000',
+    },
+    formControl:{ 
+        width: '8rem',
     }
   });
 }

@@ -34,7 +34,8 @@ function styles() {
     display: 'flex',
   },
   sankeyGraphAlign:{
-    width: '40%',
+    width: 'fit-content',
+    height: 'fit-content',
     padding: '10px',
   },
   contentAlign:{

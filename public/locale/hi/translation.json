@@ -4,7 +4,11 @@
   "salary": "वेतन",
   "budget": "बजट",
   "bills": "विपत्र",
-  "weight":"वजन",
+  "weight": "वजन",
   "Electricity Bill": "बिजली का बिल",
-  "Mobile Bill": "मोबाइल बिल"
+  "Mobile Bill": "मोबाइल बिल",
+  "Education Bill": "शिक्षा विधेयक",
+  "Grocery Bill": "किराना बिल",
+  "Home Rent Bill": "घर का किराया",
+  "add_expense": "खर्च जोड़ें"
 }
